@@ -1,74 +1,56 @@
 import {
-  GlobeIcon,
-  LockIcon,
+  BadgeCheckIcon,
+  CircleDollarSignIcon,
   type LucideIcon,
-  RocketIcon,
-  ShieldCheckIcon,
-  SparklesIcon,
-  ZapIcon,
+  MonitorSmartphoneIcon,
+  XCircleIcon,
 } from "lucide-react";
 
 import { Reveal } from "@/components/motion/reveal";
-import { SectionHeading } from "@/components/sections/section-heading";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const features: { icon: LucideIcon; title: string; description: string }[] = [
   {
-    icon: ZapIcon,
-    title: "Fast by default",
-    description: "Describe a key benefit in one or two short sentences.",
+    icon: BadgeCheckIcon,
+    title: "Companies House Compliant",
+    description: "Verified, HMRC and AML checked, so you can register with confidence.",
   },
   {
-    icon: GlobeIcon,
-    title: "Works everywhere",
-    description: "Describe a key benefit in one or two short sentences.",
+    icon: CircleDollarSignIcon,
+    title: "No Setup Fees",
+    description: "We cover the costs, so you only pay your monthly plan.",
   },
   {
-    icon: SparklesIcon,
-    title: "AI-assisted",
-    description: "Describe a key benefit in one or two short sentences.",
+    icon: MonitorSmartphoneIcon,
+    title: "Customer Portal",
+    description: "Manage your subscription with 24/7 access to our customer Portal.",
   },
   {
-    icon: ShieldCheckIcon,
-    title: "Reliable",
-    description: "Describe a key benefit in one or two short sentences.",
-  },
-  {
-    icon: LockIcon,
-    title: "Private & secure",
-    description: "Describe a key benefit in one or two short sentences.",
-  },
-  {
-    icon: RocketIcon,
-    title: "Ready to scale",
-    description: "Describe a key benefit in one or two short sentences.",
+    icon: XCircleIcon,
+    title: "Cancel Any Time",
+    description:
+      "We offer monthly rolling contracts to give you the flexibility to cancel any time.",
   },
 ];
 
 export function Features() {
   return (
-    <section id="features" className="section">
-      <div className="container-page">
-        <SectionHeading
-          eyebrow="Features"
-          title="Everything you need, nothing you don't"
-          description="A short supporting line that frames the feature grid below."
-        />
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature, i) => (
-            <Reveal key={feature.title} delay={i * 0.05}>
-              <Card className="h-full">
-                <CardHeader>
-                  <div className="mb-2 grid size-10 place-items-center rounded-lg bg-primary/10 text-primary">
-                    <feature.icon className="size-5" />
-                  </div>
-                  <CardTitle>{feature.title}</CardTitle>
-                  <CardDescription>{feature.description}</CardDescription>
-                </CardHeader>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
+    <section id="features" className="py-14">
+      <div className="container-page grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {features.map((feature, i) => (
+          <Reveal key={feature.title} delay={i * 0.06}>
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-4 grid size-14 place-items-center rounded-full bg-primary/10 text-primary">
+                <feature.icon className="size-7" />
+              </div>
+              <h3 className="text-sm font-bold uppercase tracking-wide">
+                {feature.title}
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground text-pretty">
+                {feature.description}
+              </p>
+            </div>
+          </Reveal>
+        ))}
       </div>
     </section>
   );

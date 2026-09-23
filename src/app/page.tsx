@@ -4,10 +4,11 @@ import { Cta } from "@/components/sections/cta";
 import { Faq } from "@/components/sections/faq";
 import { Features } from "@/components/sections/features";
 import { Hero } from "@/components/sections/hero";
-import { HowItWorks } from "@/components/sections/how-it-works";
-import { Logos } from "@/components/sections/logos";
+import { Locations } from "@/components/sections/locations";
 import { Pricing } from "@/components/sections/pricing";
+import { Services } from "@/components/sections/services";
 import { Testimonials } from "@/components/sections/testimonials";
+import { WhatIs } from "@/components/sections/what-is";
 import { siteConfig } from "@/config/site";
 
 const jsonLd = {
@@ -16,6 +17,7 @@ const jsonLd = {
   name: siteConfig.name,
   url: siteConfig.url,
   description: siteConfig.description,
+  telephone: siteConfig.phone,
 };
 
 export default function Home() {
@@ -30,9 +32,10 @@ export default function Home() {
       <SiteHeader />
       <main id="main" className="flex-1">
         <Hero />
-        <Logos />
         <Features />
-        <HowItWorks />
+        <WhatIs />
+        <Locations />
+        <Services />
         <Testimonials />
         <Pricing />
         <Faq />

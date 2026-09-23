@@ -1,19 +1,22 @@
 import { Reveal } from "@/components/motion/reveal";
-import { WaitlistForm } from "@/components/sections/waitlist-form";
+import { buttonVariants } from "@/components/ui/button";
 
 export function Cta() {
   return (
-    <section id="waitlist" className="section">
+    <section id="contact-cta" className="section">
       <div className="container-page">
-        <Reveal className="relative overflow-hidden rounded-3xl bg-primary px-6 py-16 text-center text-primary-foreground sm:px-16">
-          <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            Ready to be virtually there?
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
+            Don&apos;t be shy
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-pretty text-primary-foreground/80">
-            Join the waitlist and be the first to get access.
+          <p className="mt-4 text-lg text-muted-foreground text-pretty">
+            Give us a call or drop us a message and we&apos;ll help you find the
+            right plan for your business.
           </p>
-          <div className="mt-8 [&_button]:bg-background [&_button]:text-foreground [&_input]:bg-background [&_input]:text-foreground">
-            <WaitlistForm />
+          <div className="mt-8">
+            <a href="/contact" className={buttonVariants({ size: "lg" })}>
+              Contact us
+            </a>
           </div>
         </Reveal>
       </div>
