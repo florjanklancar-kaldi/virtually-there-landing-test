@@ -23,27 +23,52 @@ export function MobileNav() {
       >
         <MenuIcon />
       </SheetTrigger>
-      <SheetContent side="right" className="w-72">
+      <SheetContent side="right" className="w-80 overflow-y-auto">
         <SheetHeader>
-          <SheetTitle>{siteConfig.name}</SheetTitle>
+          <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
-        <nav className="flex flex-col gap-1 px-4">
-          {siteConfig.nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
-            >
-              {item.label}
-            </a>
-          ))}
+        <nav className="flex flex-col gap-1 px-4 pb-6">
+          {siteConfig.nav.map((item) =>
+            "items" in item ? (
+              <div key={item.label} className="py-1">
+                <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  {item.label}
+                </p>
+                {item.items.map((sub) => (
+                  <a
+                    key={sub.label}
+                    href={sub.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
+                  >
+                    {sub.label}
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
+              >
+                {item.label}
+              </a>
+            ),
+          )}
           <a
-            href="#waitlist"
+            href="#customer-portal"
             onClick={() => setOpen(false)}
-            className={buttonVariants({ className: "mt-4" })}
+            className={buttonVariants({ variant: "outline", className: "mt-4" })}
           >
-            Get early access
+            Log in
+          </a>
+          <a
+            href="#pricing"
+            onClick={() => setOpen(false)}
+            className={buttonVariants({ className: "mt-2" })}
+          >
+            Buy now
           </a>
         </nav>
       </SheetContent>
