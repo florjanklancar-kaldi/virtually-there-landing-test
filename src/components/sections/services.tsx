@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from "lucide-react";
 
+import { AppLink } from "@/components/app-link";
 import { FeaturePanel } from "@/components/sections/feature-panel";
 import { buttonVariants } from "@/components/ui/button";
 import { serviceBlocks } from "@/content/home";
@@ -18,9 +19,9 @@ function CityLinks() {
       {cities.map((city, i) => (
         <span key={city.href}>
           {i === cities.length - 1 ? " and " : " "}
-          <a className="link-underline" href={city.href}>
+          <AppLink className="link-underline" href={city.href}>
             {city.label}
-          </a>
+          </AppLink>
           {cityPunctuation(i)}
         </span>
       ))}
@@ -45,7 +46,7 @@ export function Services() {
               {service.body}
               {service.showCities ? <CityLinks /> : null}
             </p>
-            <a
+            <AppLink
               className={buttonVariants({ size: "xl", className: "group self-start" })}
               href={service.cta.href}
             >
@@ -54,7 +55,7 @@ export function Services() {
                 className="transition-transform group-hover:translate-x-1"
                 data-icon="inline-end"
               />
-            </a>
+            </AppLink>
           </FeaturePanel>
         </div>
       ))}

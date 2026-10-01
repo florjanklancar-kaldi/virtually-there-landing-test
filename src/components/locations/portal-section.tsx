@@ -1,4 +1,5 @@
 import { CheckIcon } from "lucide-react";
+import { AppLink } from "@/components/app-link";
 import { FeaturePanel } from "@/components/sections/feature-panel";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -30,12 +31,12 @@ export function PortalSection({ place }: { place: string }) {
               </li>
             ))}
           </ul>
-          <a
+          <AppLink
             className={buttonVariants({ size: "xl", className: "self-start" })}
             href="/customer-portal/"
           >
             Take a look around
-          </a>
+          </AppLink>
         </FeaturePanel>
       </div>
     </section>
