@@ -1,38 +1,56 @@
-import { SectionHeading } from "@/components/sections/section-heading";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion";
+import { PlusIcon } from "lucide-react";
+import { Reveal } from "@/components/motion/reveal";
+import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion";
+import type { Faq as FaqItem } from "@/content/faqs";
+import { cn } from "@/lib/utils";
 
-const faqs = [
-  {
-    q: "What is Virtually There?",
-    a: "A one-paragraph answer to the most common question.",
-  },
-  { q: "Who is it for?", a: "Describe your ideal customer in a sentence or two." },
-  {
-    q: "How much does it cost?",
-    a: "Summarise pricing and point to the pricing section.",
-  },
-  { q: "Is my data secure?", a: "Explain your security and privacy posture briefly." },
-  { q: "Can I cancel anytime?", a: "Yes — explain your cancellation policy here." },
-];
+type FaqProps = {
+  items: FaqItem[];
+  title?: string;
+  className?: string;
+};
 
-export function Faq() {
+export function Faq({ items, title = "FAQs to help you choose", className }: FaqProps) {
   return (
-    <section id="faq" className="section">
-      <div className="container-page max-w-3xl">
-        <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
-        <Accordion className="mt-12">
-          {faqs.map((faq) => (
-            <AccordionItem key={faq.q} value={faq.q}>
-              <AccordionTrigger>{faq.q}</AccordionTrigger>
-              <AccordionContent>{faq.a}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+    <section
+      aria-labelledby="faqs-title"
+      className={cn("section bg-green-background", className)}
+      id="faqs"
+    >
+      <div className="container-page">
+        <Reveal>
+          <h2 className="mb-10 text-4xl tracking-tight sm:text-5xl" id="faqs-title">
+            {title}
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <Accordion className="gap-3">
+            {items.map((item) => (
+              <AccordionItem
+                className="rounded-md bg-white shadow-xs transition-shadow hover:shadow-md"
+                key={item.question}
+                value={item.question}
+              >
+                {/* Custom trigger: large type and a plus that rotates into a cross. */}
+                <AccordionPrimitive.Header className="flex">
+                  <AccordionPrimitive.Trigger className="group flex flex-1 items-center justify-between gap-6 rounded-md px-6 py-6 text-left text-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:text-2xl">
+                    {item.question}
+                    <PlusIcon
+                      aria-hidden
+                      className="size-6 shrink-0 transition-transform duration-300 group-aria-expanded:rotate-45"
+                    />
+                  </AccordionPrimitive.Trigger>
+                </AccordionPrimitive.Header>
+                <AccordionContent className="px-6 pb-6 text-lg leading-relaxed">
+                  {item.answer.map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </Reveal>
       </div>
     </section>
   );

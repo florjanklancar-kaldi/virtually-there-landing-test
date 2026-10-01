@@ -1,0 +1,65 @@
+name: Claude Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  id-token: write
+
+jobs:
+  review:
+    name: Claude code review
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      # Skip (and pass) until a key is configured, and on fork PRs, which never get secrets.
+      - name: Check for Claude credentials
+        id: creds
+        env:
+          API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          if [ -n "$API_KEY" ] || [ -n "$OAUTH_TOKEN" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No Claude credentials configured; skipping review."
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.creds.outputs.present == 'true'
+        with:
+          fetch-depth: 1
+
+      - uses: anthropics/claude-code-action@v1
+        if: steps.creds.outputs.present == 'true'
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            Review this pull request for a Next.js 16 + React 19 + Tailwind v4 marketing site.
+            Read AGENTS.md first: this Next.js version differs from older versions, so check
+            APIs against node_modules/next/dist/docs/ rather than memory.
+
+            Focus on:
+            - Bugs and broken behavior (routing, server/client component boundaries, hydration)
+            - Accessibility (semantic HTML, alt text, labels, keyboard focus, contrast)
+            - SEO and metadata (titles, descriptions, OG tags, sitemap)
+            - Performance (image usage, unnecessary client components, bundle size)
+            - Security (secrets in client code, unsafe HTML, form handling)
+
+            Do not comment on formatting or lint issues; CI covers those.
+            Be concise. Only flag real problems, each with file:line and a suggested fix.
+            Post the review with `gh pr comment` as a single comment.
+          claude_args: |
+            --allowedTools "Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"

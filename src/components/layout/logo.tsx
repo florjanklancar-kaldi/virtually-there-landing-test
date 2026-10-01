@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { siteConfig } from "@/config/site";
@@ -6,16 +7,21 @@ import { cn } from "@/lib/utils";
 export function Logo({ className }: { className?: string }) {
   return (
     <Link
+      aria-label={`${siteConfig.name} home`}
+      className={cn(
+        "inline-flex shrink-0 transition-opacity hover:opacity-80",
+        className,
+      )}
       href="/"
-      className={cn("flex items-center gap-2 font-semibold tracking-tight", className)}
     >
-      <span
-        aria-hidden
-        className="grid size-7 place-items-center rounded-md bg-primary text-xs font-bold text-primary-foreground"
-      >
-        VT
-      </span>
-      {siteConfig.name}
+      <Image
+        alt={siteConfig.name}
+        className="h-10 w-auto sm:h-12"
+        height={60}
+        priority
+        src="/logo/vt-logo-primary.svg"
+        width={300}
+      />
     </Link>
   );
 }

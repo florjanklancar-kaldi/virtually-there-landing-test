@@ -16,12 +16,13 @@ export default function OpengraphImage() {
         flexDirection: "column",
         justifyContent: "center",
         padding: 80,
-        background: "#0a0a0a",
-        color: "#fafafa",
+        background: "#f3f8f3",
+        color: "#475565",
+        borderBottom: "24px solid #33eb95",
       }}
     >
       <div style={{ fontSize: 36, opacity: 0.6 }}>{siteConfig.name}</div>
-      <div style={{ fontSize: 80, fontWeight: 600, marginTop: 16, letterSpacing: -2 }}>
+      <div style={{ fontSize: 80, fontWeight: 800, marginTop: 16, letterSpacing: -2 }}>
         {siteConfig.tagline}
       </div>
     </div>,
