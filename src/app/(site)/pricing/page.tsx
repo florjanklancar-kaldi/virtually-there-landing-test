@@ -60,27 +60,31 @@ export default function PricingPage() {
         intro="One simple price for your business address, with no set-up fees. Save with an annual plan, or stay flexible month to month."
         title="Simple, transparent pricing"
       />
-      <section aria-label="Plans" className="section pt-0">
+      <section aria-label="Plans" className="section bg-green-background">
         <div className="container-page">
           <PricingPlans />
         </div>
       </section>
-      <section aria-labelledby="difference-title" className="section bg-green-background">
-        <div className="container-page grid gap-8 md:grid-cols-2">
+      <section aria-labelledby="difference-title" className="section">
+        <div className="container-page grid gap-10 md:grid-cols-2 md:gap-14">
           <Reveal className="md:col-span-2">
-            <h2 className="text-4xl tracking-tight sm:text-5xl" id="difference-title">
-              Virtual office or registered office?
+            <h2
+              className="mx-auto max-w-3xl text-balance text-center font-bold text-4xl tracking-tight sm:text-5xl"
+              id="difference-title"
+            >
+              What&apos;s the difference between a Virtual Office and a Registered Office
+              Address?
             </h2>
           </Reveal>
-          <Reveal className="rounded-2xl bg-white p-8" delay={0.05}>
-            <h3 className="mb-3 font-bold text-2xl">Virtual Office</h3>
+          <Reveal delay={0.05}>
+            <h3 className="mb-3 text-3xl">Virtual Office</h3>
             <p className="text-lg leading-relaxed">
               A trading address for your website, invoices, business cards and directory
               listings, with everyday post scanned to your portal.
             </p>
           </Reveal>
-          <Reveal className="rounded-2xl bg-white p-8" delay={0.1}>
-            <h3 className="mb-3 font-bold text-2xl">Registered Virtual Office</h3>
+          <Reveal delay={0.1}>
+            <h3 className="mb-3 text-3xl">Registered Virtual Office</h3>
             <p className="text-lg leading-relaxed">
               Everything in Virtual Office, plus an official address for Companies House
               and HMRC and director’s service addresses, keeping your home address
