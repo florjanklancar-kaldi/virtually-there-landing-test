@@ -1,3 +1,4 @@
+import { AppLink } from "@/components/app-link";
 import { JsonLd } from "@/components/page/json-ld";
 import { PageHero } from "@/components/page/page-hero";
 import { PortalLink } from "@/components/portal-link";
@@ -62,12 +63,12 @@ export function ServicePage({ service }: { service: ServiceContent }) {
             {service.cta.label}
           </PortalLink>
         ) : (
-          <a
+          <AppLink
             className={buttonVariants({ variant: "brand", size: "xl" })}
             href={service.cta.href}
           >
             {service.cta.label}
-          </a>
+          </AppLink>
         )}
         <a
           className={buttonVariants({ variant: "outline", size: "xl" })}

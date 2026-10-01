@@ -46,7 +46,7 @@ export function Services() {
               {service.body}
               {service.showCities ? <CityLinks /> : null}
             </p>
-            <a
+            <AppLink
               className={buttonVariants({ size: "xl", className: "group self-start" })}
               href={service.cta.href}
             >
@@ -55,7 +55,7 @@ export function Services() {
                 className="transition-transform group-hover:translate-x-1"
                 data-icon="inline-end"
               />
-            </a>
+            </AppLink>
           </FeaturePanel>
         </div>
       ))}
