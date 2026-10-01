@@ -10,8 +10,9 @@ import {
   XIcon,
 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
+import { AppLink } from "@/components/app-link";
 import { Logo } from "@/components/layout/logo";
 import { socials } from "@/components/layout/social-icons";
 import { PortalLink } from "@/components/portal-link";
@@ -44,12 +45,20 @@ const subLinkClass =
   "block rounded-md px-3 py-2 text-base text-primary transition-colors hover:bg-white hover:text-green-dark";
 
 /** Big, divided link row with an arrow that slides in on hover. */
-function MenuLink({ label, href }: { label: string; href: string }) {
+function MenuLink({
+  label,
+  href,
+  onClick,
+}: {
+  label: string;
+  href: string;
+  onClick: () => void;
+}) {
   return (
-    <a className={rowClass} href={href}>
+    <AppLink className={rowClass} href={href} onClick={onClick}>
       {label}
       <ArrowRightIcon className="size-5 -translate-x-2 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100" />
-    </a>
+    </AppLink>
   );
 }
 
@@ -71,6 +80,9 @@ function MenuGroup({ label, children }: { label: string; children: React.ReactNo
 export function MenuSheet() {
   const reduceMotion = useReducedMotion();
   const closeRef = useRef<HTMLButtonElement>(null);
+  // Client-side navigation keeps the sheet mounted, so close it on link click.
+  const [open, setOpen] = useState(false);
+  const close = () => setOpen(false);
 
   // Staggered slide-in, replayed each time the sheet opens (content mounts on open).
   const item = (i: number) =>
@@ -87,7 +99,7 @@ export function MenuSheet() {
         };
 
   return (
-    <Sheet>
+    <Sheet onOpenChange={setOpen} open={open}>
       <SheetTrigger
         render={
           <Button
@@ -136,9 +148,13 @@ export function MenuSheet() {
                       {[...cities, { label: "View all", href: allLocationsHref }].map(
                         (c) => (
                           <li key={c.label}>
-                            <a className={subLinkClass} href={c.href}>
+                            <AppLink
+                              className={subLinkClass}
+                              href={c.href}
+                              onClick={close}
+                            >
                               {c.label}
-                            </a>
+                            </AppLink>
                           </li>
                         ),
                       )}
@@ -148,13 +164,14 @@ export function MenuSheet() {
                     <ul>
                       {services.map(({ label, href, icon: Icon }) => (
                         <li key={href}>
-                          <a
+                          <AppLink
                             className={cn(subLinkClass, "flex items-center gap-3")}
                             href={href}
+                            onClick={close}
                           >
                             <Icon className="size-4 text-green-dark" />
                             {label}
-                          </a>
+                          </AppLink>
                         </li>
                       ))}
                     </ul>
@@ -168,7 +185,7 @@ export function MenuSheet() {
                 key={link.href}
                 {...item(i + 1)}
               >
-                <MenuLink {...link} />
+                <MenuLink {...link} onClick={close} />
               </motion.li>
             ))}
             {secondaryNav.map((link, i) => (
@@ -177,7 +194,7 @@ export function MenuSheet() {
                 key={link.href}
                 {...item(i + 1)}
               >
-                <MenuLink {...link} />
+                <MenuLink {...link} onClick={close} />
               </motion.li>
             ))}
           </ul>

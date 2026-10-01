@@ -2,6 +2,7 @@
 
 import { ArrowRightIcon } from "lucide-react";
 
+import { AppLink } from "@/components/app-link";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -31,7 +32,11 @@ export function DesktopNav() {
             <ul className="grid w-[30rem] grid-cols-3 gap-0.5">
               {cities.map((city) => (
                 <li key={city.href}>
-                  <NavigationMenuLink className="text-base text-primary" href={city.href}>
+                  <NavigationMenuLink
+                    className="text-base text-primary"
+                    closeOnClick
+                    render={<AppLink href={city.href} />}
+                  >
                     {city.label}
                   </NavigationMenuLink>
                 </li>
@@ -39,7 +44,8 @@ export function DesktopNav() {
             </ul>
             <NavigationMenuLink
               className="group/link mt-2 justify-between bg-green-background font-bold text-primary"
-              href={allLocationsHref}
+              closeOnClick
+              render={<AppLink href={allLocationsHref} />}
             >
               View all locations
               <ArrowRightIcon className="transition-transform group-hover/link:translate-x-1" />
@@ -57,7 +63,8 @@ export function DesktopNav() {
                 <li key={service.href}>
                   <NavigationMenuLink
                     className="items-start gap-3 p-3 text-primary"
-                    href={service.href}
+                    closeOnClick
+                    render={<AppLink href={service.href} />}
                   >
                     <span className="flex size-9 shrink-0 items-center justify-center rounded-md bg-green-light">
                       <Icon className="size-4.5!" />
@@ -79,7 +86,7 @@ export function DesktopNav() {
           <NavigationMenuItem key={item.href}>
             <NavigationMenuLink
               className={cn(triggerClass, "inline-flex")}
-              href={item.href}
+              render={<AppLink href={item.href} />}
             >
               {item.label}
             </NavigationMenuLink>
