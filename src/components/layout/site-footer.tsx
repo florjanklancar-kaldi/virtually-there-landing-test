@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { AppLink } from "@/components/app-link";
 import { socials } from "@/components/layout/social-icons";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/config/site";
@@ -20,12 +21,12 @@ function FooterLinks({ links, className }: { links: NavLink[]; className?: strin
     <ul className={className}>
       {links.map((link) => (
         <li key={link.label}>
-          <a
+          <AppLink
             className="inline-block py-1 transition-colors hover:text-green"
             href={link.href}
           >
             {link.label}
-          </a>
+          </AppLink>
         </li>
       ))}
     </ul>
