@@ -1,0 +1,210 @@
+// Biome: the single linter + formatter for this repo (replaces ESLint and Prettier).
+//
+// Strictness policy: every stable rule group runs its full "all" preset at error level,
+// plus hand-picked type-aware nursery rules. Rules are only turned off when they target
+// another framework or conflict with Next.js conventions — each exception says why.
+//
+// Do not silence a diagnostic with `biome-ignore` unless the code is genuinely correct;
+// every suppression must carry a reason after the colon.
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!next-env.d.ts",
+      "!pnpm-lock.yaml",
+      "!**/*.tsbuildinfo",
+      // Static assets (exported SVG artwork) are not source code.
+      "!public"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 90,
+    "lineEnding": "lf"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "jsxQuoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all",
+      "arrowParentheses": "always"
+    }
+  },
+  "css": {
+    "parser": { "tailwindDirectives": true },
+    "formatter": { "enabled": true },
+    "linter": { "enabled": true }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedAttributes": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "domains": {
+      "next": "all",
+      "react": "all",
+      "project": "all",
+      "types": "all",
+      "tailwind": "recommended"
+    },
+    "rules": {
+      "preset": "recommended",
+      "a11y": "error",
+      "security": "error",
+      "complexity": {
+        "preset": "all",
+        "noExcessiveCognitiveComplexity": {
+          "level": "error",
+          "options": { "maxAllowedComplexity": 15 }
+        },
+        "noExcessiveLinesPerFunction": {
+          "level": "error",
+          "options": { "maxLines": 150, "skipBlankLines": true }
+        },
+        "useMaxParams": { "level": "error", "options": { "max": 4 } },
+        // `void promise()` is the idiomatic way to mark intentionally un-awaited promises
+        // (required by noFloatingPromises below).
+        "noVoid": "off"
+      },
+      "correctness": {
+        "preset": "all",
+        // Next.js server code legitimately uses Node built-ins.
+        "noNodejsModules": "off",
+        "noProcessGlobal": "off",
+        // Bundler resolution: imports have no file extensions.
+        "useImportExtensions": "off",
+        // Single-page landing site: static section ids are the anchor-link targets.
+        "useUniqueElementIds": "off",
+        // Other frameworks.
+        "noSolidDestructuredProps": "off",
+        "noQwikUseVisibleTask": "off",
+        "useQwikClasslist": "off",
+        "useQwikMethodUsage": "off",
+        "useQwikValidLexicalScope": "off"
+      },
+      "performance": {
+        "preset": "all",
+        // React Compiler memoizes inline handlers, so this is noise.
+        "noJsxPropsBind": "off",
+        // Other frameworks.
+        "useSolidForComponent": "off",
+        "useVueVapor": "off"
+      },
+      "style": {
+        "preset": "all",
+        "useBlockStatements": "error",
+        "useConsistentTypeDefinitions": {
+          "level": "error",
+          "options": { "style": "type" }
+        },
+        "useImportType": { "level": "error", "options": { "style": "separatedType" } },
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": { "filenameCases": ["kebab-case"], "requireAscii": true }
+        },
+        "noExcessiveLinesPerFile": { "level": "error", "options": { "maxLines": 400 } },
+        // Pure taste / incompatible with JSX, Tailwind theming or Next.js env handling.
+        "noImplicitBoolean": "off",
+        "noJsxLiterals": "off",
+        "noMagicNumbers": "off",
+        "noTernary": "off",
+        "noProcessEnv": "off",
+        "noHexColors": "off",
+        "useExplicitLengthCheck": "off",
+        "useNamingConvention": "off",
+        "useComponentExportOnlyModules": "off",
+        "useExportsLast": "off",
+        "useDestructuring": "off",
+        "useNumericSeparators": "off"
+      },
+      "suspicious": {
+        "preset": "all",
+        "noConsole": { "level": "error", "options": { "allow": ["error", "warn"] } },
+        // Flags valid React DOM props.
+        "noReactSpecificProps": "off",
+        // Env vars are validated in src/config, not declared per-file.
+        "noUndeclaredEnvVars": "off"
+      },
+      "nursery": {
+        // Type-aware promise safety.
+        "noFloatingPromises": "error",
+        "noMisusedPromises": "error",
+        "useAwaitThenable": "error",
+        "usePromiseRejectErrors": "error",
+        // Type-aware correctness.
+        "noUnsafeTypeAssertion": "error",
+        "noUnsafePlusOperands": "error",
+        "noBaseToString": "error",
+        "noMisleadingReturnType": "error",
+        "noUselessTypeConversion": "error",
+        "useExhaustiveSwitchCases": "error",
+        "useNullishCoalescing": "error",
+        // General correctness.
+        "noImpliedEval": "error",
+        "noReturnInFinally": "error",
+        "noSelfImport": "error",
+        "noLoopFunc": "error",
+        "noUnmodifiedLoopCondition": "error",
+        "noUnnecessaryTemplateExpression": "error",
+        // Modern idioms.
+        "useStringStartsEndsWith": "error",
+        "useIncludes": "error",
+        "useArraySome": "error",
+        "useRegexpExec": "error",
+        // React / React Compiler.
+        "useReactCompiler": "error",
+        "noComponentHookFactories": "error",
+        "useReactAsyncServerFunction": "error",
+        // Replaces prettier-plugin-tailwindcss class sorting.
+        "useSortedClasses": {
+          "level": "error",
+          "fix": "safe",
+          "options": { "functions": ["cn", "cva", "clsx"] }
+        }
+      }
+    }
+  },
+  "overrides": [
+    {
+      // Next.js file conventions and tool configs require default exports.
+      "includes": [
+        "src/app/**/{page,layout,loading,error,not-found,global-error,template,default,route,sitemap,robots,manifest,icon,apple-icon,opengraph-image,twitter-image}.{ts,tsx}",
+        "*.config.{ts,mjs,js}"
+      ],
+      "linter": { "rules": { "style": { "noDefaultExport": "off" } } }
+    },
+    {
+      // shadcn/ui primitives: generated code using `import * as` and long Tailwind
+      // strings that trip entropy-based secret detection.
+      "includes": ["src/components/ui/**"],
+      "linter": {
+        "rules": {
+          "performance": { "noNamespaceImport": "off" },
+          "security": { "noSecrets": "off" }
+        }
+      }
+    },
+    {
+      // shadcn convention: `@/lib/utils` re-exports `cn`.
+      "includes": ["src/lib/utils.ts"],
+      "linter": { "rules": { "performance": { "noBarrelFile": "off" } } }
+    }
+  ]
+}

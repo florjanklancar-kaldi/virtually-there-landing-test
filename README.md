@@ -4,22 +4,20 @@ Landing page starter built with **Next.js 16** (App Router, Turbopack, React Com
 
 ## Stack
 
-| Concern       | Package                                             |
-| ------------- | --------------------------------------------------- |
-| Framework     | `next` 16, `react` 19, React Compiler               |
-| Styling       | `tailwindcss` v4, `tw-animate-css`                  |
-| UI components | `shadcn` + `@base-ui/react`, `lucide-react` icons   |
-| Theming       | `next-themes` (light / dark / system)               |
-| Animation     | `motion` (reduced-motion aware `Reveal` component)  |
-| Forms         | Server Actions + `useActionState` + `zod`, `sonner` |
-| Tooling       | TypeScript (strict), ESLint, Prettier + Tailwind    |
+| Concern       | Package                                                   |
+| ------------- | --------------------------------------------------------- |
+| Framework     | `next` 16, `react` 19, React Compiler, typed routes       |
+| Styling       | `tailwindcss` v4, `tw-animate-css`, Source Sans 3         |
+| UI components | `shadcn` + `@base-ui/react` (`base-nova`), `lucide-react` |
+| Animation     | `motion` (scroll reveals, stagger, count-up, carousel)    |
+| Tooling       | TypeScript (strict), ESLint, Prettier + Tailwind plugin   |
 
 ## Getting started
 
 ```bash
 pnpm install
 cp .env.example .env.local
-pnpm dev
+pnpm dev            # http://localhost:3003
 ```
 
 ## Scripts
@@ -33,24 +31,26 @@ pnpm dev
 
 ```
 src/
-  app/
-    _actions/waitlist.ts   # server action (zod-validated)
-    layout.tsx             # fonts, metadata, providers
-    page.tsx               # composes the landing sections + JSON-LD
-    opengraph-image.tsx    # generated OG image
-    robots.ts sitemap.ts manifest.ts not-found.tsx
+  app/                      # layout (font, metadata), page (sections + JSON-LD), OG image, robots, sitemap
+  config/site.ts            # brand name, contact details, offices, external links
+  content/
+    home.ts                 # all landing page copy: hero, USPs, locations, services, FAQs...
+    navigation.ts           # header, menu and footer links, city list
   components/
-    layout/                # header, footer, mobile nav, logo
-    sections/              # hero, logos, features, how-it-works, testimonials, pricing, faq, cta
-    motion/reveal.tsx      # scroll-reveal wrapper
-    ui/                    # shadcn components (add more: pnpm dlx shadcn@latest add <name>)
-  config/site.ts           # name, copy, URLs, nav: edit this first
-  lib/utils.ts
+    layout/                 # header (nav menu, sheet menu, call bar), footer, logo
+    sections/               # hero, ratings bar, USPs, what-is, locations, services, testimonials, FAQ, sign-off
+    motion/                 # Reveal / RevealGroup / CountUp (reduced-motion aware)
+    illustrations.tsx       # maps illustration names to the brand SVGs in public/illustrations
+    ui/                     # shadcn components (add more: pnpm dlx shadcn@latest add <name>)
 ```
 
-## Next steps
+Assets in `public/`: `logo/` and `illustrations/` come from the customer portal's `public/svg`
+(keep them in sync); `icons/` and `locations/` come from virtually-there.net.
 
-- Edit `src/config/site.ts` and the section copy.
-- Set your brand colors in `src/app/globals.css` (`:root` / `.dark` tokens).
-- Wire `joinWaitlist` to a real store (database, Resend, Loops, and so on).
-- Set `NEXT_PUBLIC_SITE_URL` in production so canonical, OG, and sitemap URLs are correct.
+Brand tokens (slate `#475565`, mint `#6AE79D`, tint `#F3F8F3`) live in `src/app/globals.css`.
+
+## Before launch
+
+- Replace the sample testimonials in `src/content/home.ts` with real, attributable ones.
+- Confirm the social and Trustpilot URLs in `src/config/site.ts`.
+- Set `NEXT_PUBLIC_SITE_URL` in production so canonical, OG and sitemap URLs are correct.

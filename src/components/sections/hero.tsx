@@ -1,61 +1,49 @@
-import { ArrowRightIcon, SparklesIcon } from "lucide-react";
+import { ArrowDownIcon } from "lucide-react";
 
+import { Illustration } from "@/components/illustrations";
 import { Reveal } from "@/components/motion/reveal";
-import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { siteConfig } from "@/config/site";
+import { hero } from "@/content/home";
 
 export function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* Background glow — swap for your own visual */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-40 -z-10 h-[40rem] bg-radial-[at_50%_0%] from-primary/10 to-transparent to-70%"
-      />
-      <div className="container-page flex flex-col items-center py-24 text-center sm:py-32">
-        <Reveal>
-          <Badge variant="outline" className="mb-6 gap-1.5">
-            <SparklesIcon />
-            Now in private beta
-          </Badge>
-        </Reveal>
-        <Reveal delay={0.05}>
-          <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
-            {siteConfig.tagline}
-          </h1>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="mt-6 max-w-2xl text-lg text-pretty text-muted-foreground sm:text-xl">
-            {siteConfig.description}
-          </p>
-        </Reveal>
-        <Reveal delay={0.15} className="mt-10 flex flex-col gap-3 sm:flex-row">
-          <a
-            href="#waitlist"
-            className={buttonVariants({ size: "lg", className: "h-11 px-5" })}
-          >
-            Get early access
-            <ArrowRightIcon data-icon="inline-end" />
-          </a>
-          <a
-            href="#how-it-works"
-            className={buttonVariants({
-              size: "lg",
-              variant: "outline",
-              className: "h-11 px-5",
-            })}
-          >
-            See how it works
-          </a>
-        </Reveal>
-        <Reveal delay={0.2} className="mt-16 w-full">
-          {/* Product screenshot / video placeholder */}
-          <div className="aspect-video w-full rounded-xl border bg-muted/40 shadow-2xl ring-8 ring-border/50">
-            <div className="grid h-full place-items-center text-sm text-muted-foreground">
-              Product visual goes here
-            </div>
-          </div>
+      <div className="container-page grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-[1.05fr_1fr] lg:py-24">
+        <div className="flex flex-col items-start gap-6 sm:gap-8">
+          <Reveal immediate>
+            <h1 className="text-balance font-extrabold text-5xl leading-[0.95] tracking-tighter sm:text-6xl lg:text-7xl xl:text-[5.25rem]">
+              {hero.title}
+            </h1>
+          </Reveal>
+          <Reveal delay={0.1} immediate>
+            <p className="max-w-xl text-pretty text-xl leading-snug sm:text-2xl lg:text-[1.75rem]">
+              {hero.subtitle}
+            </p>
+          </Reveal>
+          <Reveal delay={0.2} immediate>
+            <a
+              className={buttonVariants({ size: "xl", className: "group" })}
+              href={hero.cta.href}
+            >
+              {hero.cta.label}
+              <ArrowDownIcon
+                className="transition-transform group-hover:translate-y-0.5"
+                data-icon="inline-end"
+              />
+            </a>
+          </Reveal>
+        </div>
+        <Reveal
+          className="mx-auto w-full max-w-md lg:max-w-none"
+          delay={0.15}
+          from="right"
+          immediate
+        >
+          <Illustration
+            alt="Business woman taking a selfie in front of an office building"
+            name="hero"
+            priority
+          />
         </Reveal>
       </div>
     </section>
